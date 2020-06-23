@@ -4,6 +4,8 @@ import csv
 
 def getRisk(sector, percentage, size, training, frameworks, attacks, weaknesses):
     '''
+    I had trouble figuring out the range of the risk score.
+
     sectorRisk = 0.0
     if sector == 1:
         sectorRisk = 0.1
@@ -47,6 +49,7 @@ def getRisk(sector, percentage, size, training, frameworks, attacks, weaknesses)
         return 2
     '''
 
+    # This is my work around so that I would be able to test the GBM model. Taking the average and keeping the range [1,3]
     avg = (sector + percentage + size + training + frameworks + attacks + weaknesses) / 7.0
 
     if avg <= 1.66:
@@ -69,7 +72,7 @@ def main():
     # append the headers
     cr.writerow(["Sector", "Percentage", "Size", "Training", "Frameworks", "Attacks", "Weaknesses", "Risk"])
 
-    # now append all the combinations of the factors
+    # now append all the combinations of the factors (gave all of them 3 choices to go off of)
     for sector in range(1, 4):
         for percentage in range(1, 4):
             for size in range(1, 4):
@@ -78,6 +81,7 @@ def main():
                         for attacks in range(1, 4):
                             for weaknesses in range(1, 4):
                                 cr.writerow([str(sector), str(percentage), str(size), str(training), str(frameworks), str(attacks), str(weaknesses), str(getRisk(sector, percentage, size, training, frameworks, attacks, weaknesses))])
+
 
 if __name__ == "__main__":
     main()

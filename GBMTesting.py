@@ -5,12 +5,17 @@ from sklearn.metrics import accuracy_score
 
 
 def main():
+    # read the data set
     data = pd.read_csv('dataSet.csv')
-    data = data.sample(frac=1)  # shuffle -> fixes boosting errors
 
+    # shuffle the data around
+    data = data.sample(frac=1)
+
+    # separate the variable that needs to be found
     y = data.Risk
     x = data.drop('Risk', axis=1)
 
+    # split the training and testing data (70 / 30 split)
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
     model = GradientBoostingClassifier(n_estimators=100, max_depth=5)
